@@ -26,6 +26,7 @@ pipeline {
            steps {
               
               sh 'mvn test'
+	      sh '/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home/bin/java -jar /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarScanner/bin/sonar-scanner'
 	      sonarSummaries()
            }
            post {
