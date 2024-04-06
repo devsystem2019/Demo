@@ -1,6 +1,6 @@
 def artifactname = "devops-snow-build-app.jar"
-def repoName = "JenkinsDevOpsProject"
-def pipelineName = "SunilPipelines/Sunil-Scripted-Pipeline-Sonar"
+def repoName = "Demo"
+def pipelineName = "ScriptedPipelines/Scripted-Pipeline"
 def semanticVersion = "${env.BUILD_NUMBER}.0.0"
 def packageName = "devops-snow-build-pkg_${env.BUILD_NUMBER}"
 def version = "${env.BUILD_NUMBER}.0"
@@ -26,8 +26,9 @@ pipeline {
            steps {
               
               sh 'mvn test'
-	      sh '/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home/bin/java -jar /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarScanner/bin/sonar-scanner'
-	      sonarSummaries()
+	      snDevOpsSecurityResult securityResultAttributes: "{'scanner': 'Veracode','applicationName': 'PetStoreAPI-Github', 'securityToolId' : ''}"
+	      //sh '/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home/bin/java -jar /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarScanner/bin/sonar-scanner'
+	      //sonarSummaries()
            }
            post {
              always {
