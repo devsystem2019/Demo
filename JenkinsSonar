@@ -9,7 +9,7 @@ def pkgName = "devops-snow-build-pkg"
 pipeline {
   agent any
   tools {
-       maven 'Maven'
+       maven 'Maven' 
    } 
    environment {
 	 SCANNER_HOME = tool 'sonarScanner'
