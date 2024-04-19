@@ -10,7 +10,7 @@ pipeline {
   agent any
   tools {
        maven 'Maven'
-   }
+   } 
    environment {
 	 SCANNER_HOME = tool 'sonarScanner'
 	}  
