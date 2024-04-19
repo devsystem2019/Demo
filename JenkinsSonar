@@ -14,7 +14,7 @@ pipeline {
    environment {
 	 SCANNER_HOME = tool 'sonarScanner'
 	}  
-  stages {
+  stages {  
        stage('Build') {
            steps {
               echo 'Build Stage'
