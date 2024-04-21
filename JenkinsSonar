@@ -7,7 +7,7 @@ def version = "${env.BUILD_NUMBER}.0"
 def pkgName = "devops-snow-build-pkg"
 
 pipeline { 
-  agent any 
+  agent any  
   tools {  
        maven 'Maven' 
    } 
