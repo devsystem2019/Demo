@@ -30,11 +30,11 @@ pipeline {
 	      //sh '/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home/bin/java -jar /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarScanner/bin/sonar-scanner'
 	      //sonarSummaries()
            }
-	 /*  post {
-             always {
-                junit "**/target/surefire-reports/TEST-DevOpsDemo.Calculator.CalculatorTest.xml"
-             }
-           }*/
+	 //  post {
+          //   always {
+           //     junit "**/target/surefire-reports/TEST-DevOpsDemo.Calculator.CalculatorTest.xml"
+           //  }
+          // } 
          
        }
       stage('Deploy') { 
