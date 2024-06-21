@@ -1,0 +1,34 @@
+pipeline {
+  agent any
+  tools {
+       maven 'Maven'
+   }
+   environment {
+	 SCANNER_HOME = tool 'sonarScanner'
+	}  
+  stages {
+       stage('Test') {
+           steps {
+               sh 'mvn -B package --file pom.xml' 
+               sh 'mvn test'
+           }
+           post {
+             always {
+                junit "**/target/surefire-reports/TEST-DevOpsDemo.Calculator.CalculatorTest.xml"
+             }
+           }
+       }
+
+       stage('Deploy') {
+            steps {
+		            snDevOpsChange()
+            }
+           
+        }
+    }
+}
+
+
+
+      
+  
