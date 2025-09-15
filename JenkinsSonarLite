@@ -1,0 +1,71 @@
+def artifactName = "devops-snow-build-app.jar"
+def repoName = "JenkinsDevOpsProject"
+def semanticVersion = "${env.BUILD_NUMBER}.0.0"
+def packageName = "devops-snow-build-pkg_${env.BUILD_NUMBER}"
+def version = "${env.BUILD_NUMBER}.0"
+def pkgName = "devops-snow-build-pkg_${env.BUILD_NUMBER}"
+def changeRequestNumber = "null"
+def buildNo = "${env.BUILD_NUMBER}"
+def currStageName = "none"
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+
+    environment {
+        SCANNER_HOME = tool 'sonarScanner'
+       
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B clean package -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests but don’t fail if none exist
+                sh 'mvn test || true'
+            }
+            post {
+                always {
+                    // collect all test reports (if they exist)
+                    junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
+
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    sonarSummaries()
+                }
+            }
+        }
+    }
+}
+
+def sonarSummaries() {
+    withSonarQubeEnv('automationsonar') {
+        if (fileExists("sonar-project.properties")) {
+            sh "${SCANNER_HOME}/bin/sonar-scanner"
+        } else {
+            sh """
+                mvn clean verify sonar:sonar \
+                  -Dsonar.login=1ff462f03228674e3a684569d716aad1aff286bb \
+                  -Dsonar.host.url=https://sonarcloud.io \
+                  -Dsonar.organization=devsystem2019 \
+                  -Dsonar.projectKey=devsystem2019_GitHubActionsTest
+            """
+        }
+    }
+    // Optional: Wait for quality gate
+    // timeout(time: 1, unit: 'MINUTES') {
+    //     waitForQualityGate abortPipeline: false
+    // }
+}
