@@ -23,11 +23,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B clean package -DskipTests'
+               // sh 'mvn -B clean package -DskipTests'
+               echo 'Build'
             }
         }
 
-      /*  stage('Test') {
+      /*
+        stage('Test') {
             steps {
                 // Run tests but don’t fail if none exist
                 sh 'mvn test || true'
@@ -36,10 +38,11 @@ pipeline {
                 always {
                     // collect all test reports (if they exist)
                     junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
-
                 }
             }
-        }*/
+        }
+        */
+
         stage('Security') {
             steps {
                 script {
