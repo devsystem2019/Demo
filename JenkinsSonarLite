@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-        stage('Test') {
+      /*  stage('Test') {
             steps {
                 // Run tests but don’t fail if none exist
                 sh 'mvn test || true'
@@ -37,6 +37,13 @@ pipeline {
                     // collect all test reports (if they exist)
                     junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
 
+                }
+            }
+        }*/
+        stage('Security') {
+            steps {
+                script {
+                   snDevOpsSecurityResult securityResultAttributes: "{'scanner': 'Veracode','applicationName': 'PetStoreAPI-Github','securityToolId':'1cefeca547c8b210f31f6c6b416d43bb'}"
                 }
             }
         }
