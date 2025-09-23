@@ -28,20 +28,18 @@ pipeline {
             }
         }
 
-     /*
-        stage('Test') {
-            steps {
-                // Run tests but don’t fail if none exist
-                sh 'mvn test || true'
-            }
-            post {
-                always {
-                    // collect all test reports (if they exist)
-                    junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
-                }
-            }
-        }
-        */
+     // stage('Test') {
+//     steps {
+//         // Run tests but don’t fail if none exist
+//         sh 'mvn test || true'
+//     }
+//     post {
+//         always {
+//             // collect all test reports (if they exist)
+//             junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
+//         }
+//     }
+// }
 
 
         stage('Security') {
