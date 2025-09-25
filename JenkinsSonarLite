@@ -42,21 +42,21 @@ pipeline {
 // }
 
 
-        stage('Security') {
+       /* stage('Security') {
             steps {
                 script {
                    snDevOpsSecurityResult securityResultAttributes: "{'scanner': 'Veracode','applicationName': 'PetStoreAPI-Github','securityToolId':'1cefeca547c8b210f31f6c6b416d43bb'}"
                 }
             }
-        }
+        }*/
 
-      /*  stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     sonarSummaries()
                 }
             }
-        }*/
+        }
     }
 }
 
