@@ -25,6 +25,28 @@ pipeline {
             steps {
                // sh 'mvn -B clean package -DskipTests'
                echo 'Build'
+                snDevOpsArtifact(artifactsPayload: """{
+                        "artifacts": [{
+                            "name": "${artifactname}", 
+                            "version": "1.${env.BUILD_NUMBER}",
+                            "semanticVersion": "1.${env.BUILD_NUMBER}.0",
+                            "repositoryName": "${repoName}"
+                        }],
+                        "branchName": "main"
+                    }""")
+                   snDevOpsPackage(name: "${pkgName}-${env.BUILD_NUMBER}", artifactsPayload: """{
+                        "artifacts": [{
+                            "name": "${artifactname}",
+                            "version": "1.${env.BUILD_NUMBER}",
+                            "repositoryName": "${repoName}"
+                        }],
+                        "branchName": "main"
+                    }""")
+                 snDevOpsChange(
+                        changeRequestDetails: '{ "attributes": {"chg_model": "adffaa9e4370211072b7f6be5bb8f2ed"}, "autoCloseChange": true}',
+                        changeStepTimeOut: 18000,
+                        pollingInterval: 60
+                    )
             }
         }
 
@@ -50,13 +72,13 @@ pipeline {
             }
         }*/
 
-        stage('SonarQube Analysis') {
+       /* stage('SonarQube Analysis') {
             steps {
                 script {
                     sonarSummaries()
                 }
             }
-        }
+        }*/
     }
 }
 
