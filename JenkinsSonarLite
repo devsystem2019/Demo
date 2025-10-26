@@ -26,7 +26,7 @@ pipeline {
             steps {
                // sh 'mvn -B clean package -DskipTests'
                echo 'Build'
-                snDevOpsArtifact(artifactsPayload: """{
+             /*   snDevOpsArtifact(artifactsPayload: """{
                         "artifacts": [{
                             "name": "${artifactname}", 
                             "version": "1.${env.BUILD_NUMBER}",
@@ -47,22 +47,22 @@ pipeline {
                         changeRequestDetails: '{ "attributes": {"chg_model": "adffaa9e4370211072b7f6be5bb8f2ed"}, "autoCloseChange": true}',
                         changeStepTimeOut: 18000,
                         pollingInterval: 60
-                    )
+                    )*/
             }
         }
 
-     // stage('Test') {
-//     steps {
-//         // Run tests but don’t fail if none exist
-//         sh 'mvn test || true'
-//     }
-//     post {
-//         always {
-//             // collect all test reports (if they exist)
-//             junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
-//         }
-//     }
-// }
+    stage('Test') {
+     steps {
+         // Run tests but don’t fail if none exist
+        sh 'mvn test || true'
+    }
+     post {
+         always {
+            // collect all test reports (if they exist)
+             junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
+         }
+    }
+ }
 
 
        /* stage('Security') {
