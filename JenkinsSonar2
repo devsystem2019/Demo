@@ -3,26 +3,26 @@ pipeline:
     any: true
 
   stages:
-    - stage: "Build"
+    - stage: "Build1"
       steps:
-        - echo "Building the application..."
+        - echo "Building the application...2"
         - sh: |
             echo "Compiling source code..."
             # Add your build commands here
             # e.g., mvn clean package
 
-    - stage: "Test"
+    - stage: "Test1"
       steps:
         - echo "Running tests..."
         - sh: |
-            echo "Executing unit tests..."
+            echo "Executing unit tests...2"
             # e.g., mvn test
 
-    - stage: "Deploy"
+    - stage: "Deploy1"
       steps:
         - echo "Deploying application..."
         - sh: |
-            echo "Deploying to staging environment..."
+            echo "Deploying to staging environment...2"
             # e.g., kubectl apply -f deployment.yaml
 
   post:
