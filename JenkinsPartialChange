@@ -1,0 +1,65 @@
+def artifactname = "devops-snow-build-app.jar"
+def repoName = "Demo"
+def semanticVersion = "${env.BUILD_NUMBER}.0.0"
+def packageName = "devops-snow-build-pkg_${env.BUILD_NUMBER}"
+def version = "${env.BUILD_NUMBER}.0"
+def pkgName = "devops-snow-build-pkg"
+
+pipeline {
+  agent any
+  tools {
+    maven 'Maven'
+  }
+  environment { 
+	  SCANNER_HOME = tool 'sonarScanner'
+	} 
+  stages {
+    stage('Build') {
+      steps {
+        echo 'In build stage'
+        sh 'mvn -B -DskipTests clean compile'
+        echo 'Build successful'
+      }
+    }
+    stage('Test') { 
+      steps {
+        echo 'In build stage'
+        sh 'mvn test'
+        echo 'Test successful'
+      }
+    }
+    stage('Sonar') { 
+      steps {
+        echo 'In build stage'
+        echo 'Sonar successful'
+      }
+    }
+    stage('Veracode') { 
+      steps {
+        echo 'In build stage'
+        echo 'Veracode successful'
+      }
+    }
+    stage('Change') { 
+      steps {
+        echo 'In build stage'
+        snDevOpsChange(
+          changeCreationTimeOut: 3600,
+          changeStepTimeOut: 18000,
+          pollingInterval: 60,
+          changeRequestDetails: """
+          {
+              "attributes": {
+                  "chg_model": {
+                      "name": "DevOps"
+                  },
+                  "description": "Automated Software Deployment from Jenkins Pipeline",
+                  "assignment_group": "a715cd759f2002002920bde8132e7018"
+              }
+          }
+          """)
+        echo 'Change successful'
+      }
+    }
+  }
+}
