@@ -23,26 +23,27 @@ pipeline {
     }
     stage('Test') { 
       steps {
-        echo 'In build stage'
+        echo 'In Test stage'
         sh 'mvn test'
         echo 'Test successful'
       }
     }
     stage('Sonar') { 
       steps {
-        echo 'In build stage'
+        echo 'In Sonar stage'
+		sh '${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=riyapulusuganti_Demo -Dsonar.organization=riyapulusuganti -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=1ff462f03228674e3a684569d716aad1aff286bb -Dsonar.java.binaries=target/ -Dsonar.branch.name=master'
         echo 'Sonar successful'
       }
     }
     stage('Veracode') { 
       steps {
-        echo 'In build stage'
+        echo 'In Veracode stage'
         echo 'Veracode successful'
       }
     }
     stage('Change') { 
       steps {
-        echo 'In build stage'
+        echo 'In Change stage'
         snDevOpsChange(
           changeCreationTimeOut: 3600,
           changeStepTimeOut: 18000,
