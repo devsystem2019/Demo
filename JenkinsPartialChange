@@ -1,10 +1,3 @@
-def artifactname = "devops-snow-build-app.jar"
-def repoName = "Demo"
-def semanticVersion = "${env.BUILD_NUMBER}.0.0"
-def packageName = "devops-snow-build-pkg_${env.BUILD_NUMBER}"
-def version = "${env.BUILD_NUMBER}.0"
-def pkgName = "devops-snow-build-pkg"
-
 pipeline {
   agent any
   tools {
@@ -12,7 +5,7 @@ pipeline {
   }
   environment { 
 	  SCANNER_HOME = tool 'sonarScanner'
-	} 
+  } 
   stages {
     stage('Build') {
       steps {
@@ -27,6 +20,11 @@ pipeline {
         sh 'mvn test'
         echo 'Test successful'
       }
+	  post {
+		always {
+			junit '**/target/surefire-reports/TEST-*.xml'
+		}
+	  }
     }
     stage('Sonar') { 
       steps {
